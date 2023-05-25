@@ -11,15 +11,15 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - Background
   - Blocks
   - Monster
   - Ground
-  - 
-  - 
+  - Item
+  - Wall
   - 
   - 
   - 
@@ -55,4 +55,7 @@ TagManager:
     locked: 0
   - name: Block
     uniqueID: 3338093977
+    locked: 0
+  - name: Item
+    uniqueID: 926690561
     locked: 0
