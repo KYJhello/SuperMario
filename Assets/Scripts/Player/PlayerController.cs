@@ -11,12 +11,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float runRepeat;
 
     [SerializeField] Transform jumpBoxCheckPoint;
+    [SerializeField] Transform coin;
 
     [SerializeField] LayerMask groundLayer;
+    [SerializeField] LayerMask coinLayer;
 
     private Rigidbody2D rb;
     private Vector2 inputDir;
     private bool isGround;
+    private Transform target;
+
+    public enum State { BigMario, SmallMario, FireMario, Death, Size }
 
     private void Awake()
     {
@@ -86,7 +91,7 @@ public class PlayerController : MonoBehaviour
          }
         
     }   
-
+    
     private void GroundCheck()
     {
 
@@ -101,5 +106,53 @@ public class PlayerController : MonoBehaviour
             isGround = false;
             Debug.DrawRay(transform.position, Vector3.down * 1.05f, Color.green);
         }
+    }
+
+    /*
+    private void getCoin()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(target.position,Vector2.right, 1.05f, );
+        if (hit.collider != null)
+        {
+            isGround = true;
+            Debug.DrawRay(transform.position, new Vector3(hit.point.x, hit.point.y, 0) - transform.position, Color.red);
+        }
+        else
+        {
+            isGround = false;
+            Debug.DrawRay(transform.position, Vector3.down * 1.05f, Color.green);
+        }
+    }
+    */
+
+
+    private void getItem()
+    {
+
+    }
+
+    private void playersit()
+    {
+
+    }
+
+    private void sizeUp()
+    {
+
+    }
+
+    private void sizeDown()
+    {
+
+    }
+
+    private void powerUp()
+    {
+
+    }
+
+    private void powerDown()
+    {
+
     }
 }
