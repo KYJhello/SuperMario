@@ -2,17 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IMoveable : MonoBehaviour
+public interface IMoveable
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public abstract void Turn();
+    public abstract void Move();
+    public abstract bool IsForwardExist();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
