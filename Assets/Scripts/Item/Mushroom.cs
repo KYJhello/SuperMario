@@ -29,18 +29,18 @@ public class Mushroom : Item, IMoveable, IBornToBlock
     public bool IsForwardExist()
     {
         Debug.DrawRay(forwardCheckPoint.position, Vector2.down, Color.red);
-        return Physics2D.Raycast(forwardCheckPoint.position, Vector2.down, 1f, wallMask);
+        return Physics2D.Raycast(forwardCheckPoint.position, Vector2.down, 0.1f, wallMask);
     }
 
     public override void Move()
     {
-        rb.velocity = new Vector2(transform.right.x * -moveSpeed, rb.velocity.y);
+        rb.velocity = new Vector2(transform.right.x * moveSpeed, rb.velocity.y);
     }
 
     public void Rise()
     {
     }
-
+    
     public override void Turn()
     {
         transform.Rotate(Vector3.up, 180);
