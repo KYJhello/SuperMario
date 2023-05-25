@@ -6,11 +6,24 @@ using UnityEngine;
  public class GameManager : MonoBehaviour
 {
     public const string DefaultName = "Manager";
+
+    private PlayerController playerController;
+    private AudioSource audioSource;
+
     private static GameManager instance;
     private static DataManager dataManager;
 
     public static GameManager Instance { get { return instance; } }
     public static DataManager Data {  get { return dataManager; } }
+
+    // 현재 플레이어의 상태를 저장하는 변수
+    PlayerState currentPlayerState = GameManager.Instance.GetCurrentPlayerState();
+
+    // 현재 플레이어 상태를 반환하는 함수
+    public PlayerState GetCurrentPlayerState()
+    {
+        return playerController.currentState; //현재 플레이어 상태 변환
+    }
 
     private void Awake()
     {
@@ -41,4 +54,6 @@ using UnityEngine;
         dataObj.transform.SetParent(transform);
         dataManager = dataObj.AddComponent<DataManager>();
     }
+
+   
 }
