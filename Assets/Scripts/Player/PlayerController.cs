@@ -49,13 +49,13 @@ public class PlayerController : MonoBehaviour
     public void Run()
     {
 
-        if (rb.velocity.x > (moveSpeed + runSpeed))
-            rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
+        if (rb.velocity.x > (runSpeed))
+            rb.velocity = new Vector2((runSpeed), rb.velocity.y);
 
-        if (inputDir.x < 0 && rb.velocity.x > -moveSpeed)
-            rb.AddForce(Vector2.right * inputDir.x * moveSpeed, ForceMode2D.Impulse);
-        else if (inputDir.x > 0 && rb.velocity.x < moveSpeed)
-            rb.AddForce(Vector2.right * inputDir.x * moveSpeed, ForceMode2D.Impulse);
+        if (inputDir.x < 0 && rb.velocity.x > -(runSpeed))
+            rb.AddForce(Vector2.right * inputDir.x * (runSpeed), ForceMode2D.Impulse);
+        else if (inputDir.x > 0 && rb.velocity.x < (runSpeed))
+            rb.AddForce(Vector2.right * inputDir.x * (runSpeed), ForceMode2D.Impulse);
     }
 
     private void OnMove(InputValue value)
