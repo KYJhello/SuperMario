@@ -11,14 +11,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float runRepeat;
 
     [SerializeField] Transform jumpBoxCheckPoint;
-    [SerializeField] Transform coin;
+    [SerializeField] Transform itemBoxPoint;
 
     [SerializeField] LayerMask groundLayer;
-    [SerializeField] LayerMask coinLayer;
+    
 
     private Rigidbody2D rb;
     private Vector2 inputDir;
     private bool isGround;
+   
     private Transform target;
 
     public enum State { BigMario, SmallMario, FireMario, Death, Size }
@@ -35,7 +36,7 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        
+        //GetCoin();
     }
 
     public void Move()
@@ -62,6 +63,7 @@ public class PlayerController : MonoBehaviour
     private void OnMove(InputValue value)
     {
         inputDir = value.Get<Vector2>();
+        
     }
 
     private void OnJump(InputValue value)
@@ -109,28 +111,54 @@ public class PlayerController : MonoBehaviour
     }
 
     /*
-    private void getCoin()
+    private void GetCoin()
     {
-        RaycastHit2D hit = Physics2D.Raycast(target.position,Vector2.right, 1.05f, );
+        RaycastHit2D hit = Physics2D.Raycast(itemBoxPoint.position,Vector2.right, 1.05f, coinLayer);
         if (hit.collider != null)
         {
-            isGround = true;
+            isCoin = true;
+            Debug.Log("ƒ⁄¿Œ»πµÊ");
             Debug.DrawRay(transform.position, new Vector3(hit.point.x, hit.point.y, 0) - transform.position, Color.red);
         }
         else
         {
-            isGround = false;
-            Debug.DrawRay(transform.position, Vector3.down * 1.05f, Color.green);
+            isCoin = false;
+            Debug.Log("ƒ⁄¿ŒπÃ»πµÊ");
+            Debug.DrawRay(transform.position, Vector3.right * 1.05f, Color.green);
         }
     }
     */
 
-
-    private void getItem()
+    // √Êµπ
+    private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.collider.gameObject.name == "Coin")   // ƒ⁄¿Œ
+        {
+
+            // ƒ⁄¿Œ¿Ã 1 ¡ı∞°«—¥Ÿ
+            Destroy(collision.gameObject);
+            GameManager.Data.AddCoinCount(1);
+            GameManager.Data.AddScoreCount(1000);
+            Debug.Log("ƒ⁄¿Œ»πµÊ");
+        }
+
+        if (collision.collider.gameObject.name == "Mushroom")   // πˆº∏
+        {
+            // smallMario∞° bigMario∑Œ ªÛ≈¬ ¿¸»Ø
+            Destroy(collision.gameObject);
+            Debug.Log("πˆº∏»πµÊ");
+        }
+        if (collision.collider.gameObject.name == "Flower")   // ≤…
+        {
+            // smallMario∞° bigMario∑Œ ªÛ≈¬ ¿¸»Ø
+            // bigMario∞° fireMario∑Œ ªÛ≈¬ ¿¸»Ø
+            Destroy(collision.gameObject);
+            Debug.Log("≤…»πµÊ");
+        }
 
     }
 
+    
     private void playersit()
     {
 

@@ -101,7 +101,6 @@ GameObject:
   - component: {fileID: 698678974007791079}
   - component: {fileID: 8280506827256659207}
   - component: {fileID: 5682048595740356049}
-  - component: {fileID: 3809631175140130232}
   - component: {fileID: 3999494782919911602}
   m_Layer: 0
   m_Name: Player
@@ -230,22 +229,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!70 &3809631175140130232
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6836347872218040398}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
-  m_Direction: 0
 --- !u!114 &3999494782919911602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,6 +246,7 @@ MonoBehaviour:
   runSpeed: 5
   runRepeat: 0
   jumpBoxCheckPoint: {fileID: 3999494782543065993}
+  itemBoxPoint: {fileID: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 512
