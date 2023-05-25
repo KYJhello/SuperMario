@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpPower;
     [SerializeField] private float runSpeed;
+    [SerializeField] private float runRepeat;
+
+    [SerializeField] Transform jumpBoxCheckPoint;
 
     [SerializeField] LayerMask groundLayer;
 
@@ -27,7 +30,7 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        GroundCheck();
+        
     }
 
     public void Move()
@@ -47,15 +50,8 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Run()
-    {
-
-        if (rb.velocity.x > (runSpeed))
-            rb.velocity = new Vector2((runSpeed), rb.velocity.y);
-
-        if (inputDir.x < 0 && rb.velocity.x > -(runSpeed))
-            rb.AddForce(Vector2.right * inputDir.x * (runSpeed), ForceMode2D.Impulse);
-        else if (inputDir.x > 0 && rb.velocity.x < (runSpeed))
-            rb.AddForce(Vector2.right * inputDir.x * (runSpeed), ForceMode2D.Impulse);
+    { 
+       
     }
 
     private void OnMove(InputValue value)
@@ -65,20 +61,36 @@ public class PlayerController : MonoBehaviour
 
     private void OnJump(InputValue value)
     {
+        GroundCheck();
         if (!isGround)
             return;
         Jump();
     }
 
     private void OnRun(InputValue value)
-    {
-        inputDir = value.Get<Vector2>();
-    }
+    {   
+        
+         if (value.isPressed)
+         {
+             if (rb.velocity.x > runSpeed)
+                 rb.velocity = new Vector2(runSpeed, rb.velocity.y);
+             if (inputDir.x < 0 && rb.velocity.x > -runSpeed)
+                 rb.AddForce(Vector2.right * inputDir.x * runSpeed, ForceMode2D.Impulse);
+             else if (inputDir.x > 0 && rb.velocity.x < runSpeed)
+                 rb.AddForce(Vector2.right * inputDir.x * runSpeed, ForceMode2D.Impulse);
+         }
+         
+         else
+         { 
+             return;
+         }
+        
+    }   
 
     private void GroundCheck()
     {
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1.05f, groundLayer);
+        RaycastHit2D hit = Physics2D.Raycast(jumpBoxCheckPoint.position, Vector2.down, 1.05f, groundLayer);
         if (hit.collider != null)
         {
             isGround = true;
