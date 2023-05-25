@@ -3,19 +3,24 @@ using System.Collections.Generic;
 using UnityEditor.Build.Content;
 using UnityEngine;
 
+
 public abstract class Item : MonoBehaviour
 {
+    protected enum Items { mushroom, fire, star, coin };
     // 아이템 코드
     // 0 = 버섯
     // 1 = 불꽃      
     // 2 = 별        
     // 3 = 코인  
-    [SerializeField] private int itemCode;
-    [SerializeField] private string itemName;
-    [SerializeField] private Transform blockPos;
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private bool isMove;
-    [SerializeField] private Animator animator;
+    [SerializeField] protected Items itemInfo;
+    [SerializeField] protected Transform blockPos;
+    [SerializeField] protected float moveSpeed;
+    [SerializeField] protected Animator animator;
+
+    public abstract void Move();
+
+    public abstract void Turn();
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
