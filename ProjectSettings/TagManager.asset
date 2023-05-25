@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Object
+  - Item
+  - Monster
   layers:
   - Default
   - TransparentFX
@@ -11,10 +14,10 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Background
+  - Blocks
+  - Monster
+  - Ground
   - 
   - 
   - 
@@ -40,4 +43,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background_inner
+    uniqueID: 3347593757
+    locked: 0
+  - name: Background_outter
+    uniqueID: 1337463413
+    locked: 0
+  - name: Ground
+    uniqueID: 2512871733
+    locked: 0
+  - name: Block
+    uniqueID: 3338093977
     locked: 0
