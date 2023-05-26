@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GoombaScripts : Monster
 {
+    monster
     public enum State { Idle, Left, Right, Die}
 
     private bool isDie = false;
@@ -46,11 +46,18 @@ public class GoombaScripts : Monster
         {
             rb.velocity = new Vector2(transform.right.x * moveSpeed, rb.velocity.y);
         }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    develop
     }
 
-
-    private void OnTriggerEnter2D(Collider2D other)
+    // Update is called once per frame
+    void Update()
     {
+        monster
         Debug.Log("Trigger ON");
         
         if(other.gameObject.name == "Fire")
@@ -76,6 +83,8 @@ public class GoombaScripts : Monster
         {
             anim.SetBool("MonsterDie", true);
         }
+
+    develop
         
     }
     private void Die()
