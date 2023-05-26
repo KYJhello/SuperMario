@@ -45,11 +45,18 @@ public class GoombaScripts : Monster
         {
             rb.velocity = new Vector2(transform.right.x * moveSpeed, rb.velocity.y);
         }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    develop
     }
 
-
-    private void OnTriggerEnter2D(Collider2D other)
+    // Update is called once per frame
+    void Update()
     {
+        monster
         Debug.Log("Trigger ON");
         
         if(other.gameObject.name == "Fire")
