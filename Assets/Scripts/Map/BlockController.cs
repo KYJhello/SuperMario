@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockManager : MonoBehaviour
+public class BlockController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private GameObject myChildObj;
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        Debug.Log("트리거 시작");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
