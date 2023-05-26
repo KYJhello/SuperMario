@@ -94,13 +94,13 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: HitFire
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -146,10 +146,14 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
+Baek
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: MonsterDie
     m_EventTreshold: 0
+
+  m_Conditions: []
+develop
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -4915250181586851214}
   m_Solo: 0

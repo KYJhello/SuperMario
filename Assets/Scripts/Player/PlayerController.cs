@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.U2D.Path.GUIFramework;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,8 +15,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform itemBoxPoint;
 
     [SerializeField] LayerMask groundLayer;
-    
 
+    public PlayerState currentState;
     private Rigidbody2D rb;
     private Vector2 inputDir;
     private bool isGround;
@@ -24,19 +25,63 @@ public class PlayerController : MonoBehaviour
 
     public enum State { BigMario, SmallMario, FireMario, Death, Size }
 
+   
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+      
 
     }
+
+    
+
+    private void OnRunPerformed(InputAction.CallbackContext context)
+    {
+        float runInput = context.ReadValue<float>();
+
+        if (runInput != 0)
+        {
+            if (rb.velocity.x > runSpeed && runInput > 0)
+                rb.velocity = new Vector2(runSpeed, rb.velocity.y);
+            else if (rb.velocity.x < -runSpeed && runInput < 0)
+                rb.velocity = new Vector2(-runSpeed, rb.velocity.y);
+
+            rb.AddForce(Vector2.right * runInput * runSpeed, ForceMode2D.Impulse);
+        }
+        else
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+        }
+    }
+
+    private void OnRunCanceled(InputAction.CallbackContext context)
+    {
+        // Run 액션 취소 시 실행할 코드 (여기서는 아무 작업도 수행하지 않음)
+    }
+
+    private void Start()
+    {
+        currentState = new SmallMarioState(this);
+    }
+
     private void Update()
     {
         Move();
+        currentState.Update();
 
     }
     private void FixedUpdate()
     {
         //GetCoin();
+    }
+
+    public void ChangeState(PlayerState newState)
+    {
+        currentState.Exit();
+
+        currentState = newState;
+        currentState.Enter();
     }
 
     public void Move()
@@ -48,6 +93,7 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector2.right * inputDir.x * moveSpeed, ForceMode2D.Force);
         else if (inputDir.x > 0 && rb.velocity.x < moveSpeed)
             rb.AddForce(Vector2.right * inputDir.x * moveSpeed, ForceMode2D.Force);
+
     }
 
     public void Jump()
@@ -63,7 +109,6 @@ public class PlayerController : MonoBehaviour
     private void OnMove(InputValue value)
     {
         inputDir = value.Get<Vector2>();
-        
     }
 
     private void OnJump(InputValue value)
@@ -74,26 +119,26 @@ public class PlayerController : MonoBehaviour
         Jump();
     }
 
+
     private void OnRun(InputValue value)
-    {   
-        
-         if (value.isPressed)
-         {
-             if (rb.velocity.x > runSpeed)
-                 rb.velocity = new Vector2(runSpeed, rb.velocity.y);
-             if (inputDir.x < 0 && rb.velocity.x > -runSpeed)
-                 rb.AddForce(Vector2.right * inputDir.x * runSpeed, ForceMode2D.Impulse);
-             else if (inputDir.x > 0 && rb.velocity.x < runSpeed)
-                 rb.AddForce(Vector2.right * inputDir.x * runSpeed, ForceMode2D.Impulse);
-         }
-         
-         else
-         { 
-             return;
-         }
-        
-    }   
-    
+    {
+        float runInput = value.Get<float>();
+
+        if (runInput != 0)
+        {
+            if (rb.velocity.x > runSpeed && runInput > 0)
+                rb.velocity = new Vector2(runSpeed, rb.velocity.y);
+            else if (rb.velocity.x < -runSpeed && runInput < 0)
+                rb.velocity = new Vector2(-runSpeed, rb.velocity.y);
+
+            rb.AddForce(Vector2.right * runInput * runSpeed, ForceMode2D.Impulse);
+        }
+
+        else
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+        }
+    }
     private void GroundCheck()
     {
 
