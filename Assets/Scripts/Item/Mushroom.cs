@@ -5,31 +5,48 @@ using UnityEngine;
 public class Mushroom : Item, IMoveable, IBornToBlock
 {
     private Rigidbody2D rb;
+    private bool doMove;
     [SerializeField] private Transform forwardCheckPoint;
+    [SerializeField] private Transform upperCheckPoint;
     [SerializeField] private LayerMask wallMask;
 
     private void Awake()
     {
         itemInfo = Items.mushroom;
-        rb = GetComponent<Rigidbody2D>();
+        doMove = false;
+    } 
+
+    private void Start()
+    {
     }
 
     private void Update()
     {
-        Move();
+        if (doMove)
+        {
+            Move();
+        }
+        else
+        {
+            Rise();
+        }
     }
 
     private void FixedUpdate()
     {
-        if (IsForwardExist())
+        if (doMove)
         {
-            Turn(); 
+            if (IsForwardExist())
+            {
+                Turn();
+            }
         }
     }
+
     public bool IsForwardExist()
     {
         Debug.DrawRay(forwardCheckPoint.position, Vector2.down, Color.red);
-        return Physics2D.Raycast(forwardCheckPoint.position, Vector2.down, 0.1f, wallMask);
+        return Physics2D.Raycast(forwardCheckPoint.position, Vector2.down, 1f, wallMask);
     }
 
     public override void Move()
@@ -39,6 +56,20 @@ public class Mushroom : Item, IMoveable, IBornToBlock
 
     public void Rise()
     {
+        transform.Translate(Vector2.up * 1 * Time.deltaTime); 
+        Debug.Log("ø√∂Û∞°¡‡");
+        if (transform.position.y > upperCheckPoint.position.y)
+            DoneRise();
+        
+    }
+
+    public void DoneRise()
+    {
+        Debug.Log("ø√∂Û∞°¡‡2");
+        gameObject.AddComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        doMove = true;
     }
     
     public override void Turn()
