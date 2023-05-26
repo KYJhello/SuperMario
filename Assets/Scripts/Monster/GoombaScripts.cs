@@ -3,42 +3,49 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class GoombaScripts : MonoBehaviour
+public class GoombaScripts : Monster
 {
-    public enum State { Idle, Active, Die}
+    public enum State { Idle, Left, Right, Die}
 
-    [SerializeField] private float moveSpeed;
+    private bool isDie = false;
+
+    [SerializeField] private float moveSpeed = 1.0f;
     [SerializeField] Transform wallCheckPoint;
     [SerializeField] LayerMask GoombaMask;
+    [SerializeField] PlayerPrefs player;
+
 
     private Rigidbody2D rb;
     private Animator anim;
-    private bool isWallExist;
+    private Collider2D collider;
+    public State curState;
+    
+    
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        isWallExist = false;
+        player = GetComponent<PlayerPrefs>();
+        collider = GetComponent<Collider2D>();
+        curState = State.Left;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         Move();
-        if (isWallExist)
-        {
-            Turn();
-            isWallExist=false;
-        }
     }
+
     public void Move()
     {
-        rb.velocity = new Vector2(-transform.right.x, rb.velocity.y);
-    }
-    public void Turn()
-    {
-        Debug.Log("Turn on");
-        transform.Rotate(Vector3.up, 180);
+        if(curState == State.Left)
+        {
+            rb.velocity = new Vector2(transform.right.x * -1 * moveSpeed, rb.velocity.y);
+        }
+        else if(curState == State.Right)
+        {
+            rb.velocity = new Vector2(transform.right.x * moveSpeed, rb.velocity.y);
+        }
     }
 
 
@@ -49,15 +56,32 @@ public class GoombaScripts : MonoBehaviour
         if(other.gameObject.name == "Fire")
         {
             anim.SetBool("HitFire", true);
+            Die();
         }
         else if(other.gameObject.tag == "Object")
         {
-            isWallExist = true;
+            if(curState == State.Left) {
+                Debug.Log("Left call");
+                curState = State.Right;
+            }
+            else if (curState == State.Right) {
+                Debug.Log("Right call");
+                curState = State.Left;
+            }
+        }else if(other.gameObject.tag == "Player")
+        {
+
         }
         else
         {
             anim.SetBool("MonsterDie", true);
         }
         
+    }
+    private void Die()
+    {
+        rb.gravityScale = 1.0f;
+        rb.velocity = Vector2.up * 3;
+        collider.enabled = false;
     }
 }
